@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use IntentCoding, please cite the ACL 2026 paper."
+title: "IntentCoding"
+type: software
+authors:
+  - family-names: Fang
+    given-names: Zheng
+  - family-names: Dong
+    given-names: Yihong
+  - family-names: Mou
+    given-names: Lili
+  - family-names: Jin
+    given-names: Dongming
+  - family-names: Jin
+    given-names: Zhi
+  - family-names: Li
+    given-names: Ge
+preferred-citation:
+  type: conference-paper
+  title: "IntentCoding: Amplifying User Intent in Code Generation"
+  authors:
+    - family-names: Fang
+      given-names: Zheng
+    - family-names: Dong
+      given-names: Yihong
+    - family-names: Mou
+      given-names: Lili
+    - family-names: Jin
+      given-names: Dongming
+    - family-names: Jin
+      given-names: Zhi
+    - family-names: Li
+      given-names: Ge
+  collection-title: "Findings of the Association for Computational Linguistics: ACL 2026"
+  year: 2026
+  month: 7
+  start: 33246
+  end: 33261
+  doi: "10.18653/v1/2026.findings-acl.1662"
+  url: "https://aclanthology.org/2026.findings-acl.1662/"
