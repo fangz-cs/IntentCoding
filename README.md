@@ -86,7 +86,9 @@ Each output record contains the source ID and ranked completions:
 
 Prompts are not copied to the output or printed by the CLI.
 
-## Build CodeConstraints
+## CodeConstraints
+
+### Build the dataset
 
 The release includes a deterministic refactor of the original dataset builder.
 It preserves the paper's prompt templates and JSON schema while removing
@@ -123,6 +125,33 @@ intentcoding \
   --max-new-tokens 256
 ```
 
+### Evaluate predictions
+
+The release also includes the execution-based evaluator used for
+CodeConstraints. It accepts the JSONL produced by `intentcoding`, selects the
+top-ranked entry in `completions`, and reports exact return-format, element
+data-type, value, and length constraint accuracy.
+
+```bash
+intentcoding-evaluate-codeconstraints \
+  --dataset data/codeconstraints/level4_mask_all_without_sys.jsonl \
+  --predictions outputs/codeconstraints-qwen.jsonl \
+  --output outputs/codeconstraints-qwen-eval.jsonl \
+  --allow-code-execution
+```
+
+The summary is printed as JSON. The optional output contains only task IDs,
+statuses, Boolean constraint checks, and `all_pass`; prompts and generated code
+are not copied. The evaluator also accepts legacy `completion`,
+`o_completion`, `raw_completion`, and `[text, score]` completion records.
+
+Following the original protocol, functions that accept `n` are checked for
+every integer from 1 through 119. Each completion runs in a fresh temporary
+directory and isolated Python subprocess with a timeout; POSIX systems also
+apply memory, CPU, file, and process limits. These controls are defense in
+depth, not a security boundary: only evaluate trusted predictions, or run the
+command inside a disposable container or VM.
+
 ## Paper settings
 
 
@@ -147,12 +176,14 @@ then construct masked prompts following Appendix F of the paper.
 ```text
 src/intentcoding/
   codeconstraints.py  Deterministic CodeConstraints construction
-  cli.py       Generic JSONL inference command
-  decoding.py  Multi-strength ensemble and beam search
-  masking.py   Intent-span attention masking
+  codeconstraints_eval.py  Execution-based constraint evaluation
+  cli.py                  Generic JSONL inference command
+  decoding.py             Multi-strength ensemble and beam search
+  masking.py              Intent-span attention masking
 scripts/
-  build_codeconstraints.py  Standalone builder entry point
-tests/         Deterministic unit tests with synthetic inputs
+  build_codeconstraints.py     Standalone builder entry point
+  evaluate_codeconstraints.py  Standalone evaluator entry point
+tests/                        Deterministic tests with synthetic inputs
 ```
 
 

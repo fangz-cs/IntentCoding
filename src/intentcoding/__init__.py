@@ -1,5 +1,12 @@
 """Intent-amplified decoding for code generation."""
 
+from intentcoding.codeconstraints_eval import (
+    EvaluationConfig,
+    TaskEvaluation,
+    evaluate_completion,
+    evaluate_files,
+    summarize_evaluations,
+)
 from intentcoding.decoding import (
     DEFAULT_ALPHAS,
     DecodingConfig,
@@ -14,11 +21,15 @@ __all__ = [
     "DEFAULT_ALPHAS",
     "MASK_MARKER",
     "DecodingConfig",
+    "EvaluationConfig",
     "Generation",
     "IntentDecoder",
     "PromptViews",
+    "TaskEvaluation",
     "TokenCandidate",
     "encode_prompt_views",
     "ensemble_candidates",
+    "evaluate_completion",
+    "evaluate_files",
+    "summarize_evaluations",
 ]
-
